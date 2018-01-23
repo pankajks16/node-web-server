@@ -3,16 +3,28 @@ const hbs = require('hbs');
 
 var app = express();
 
+hbs.registerPartials(__dirname+'/views/partials')
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname+'/public'));
 
 app.get('/', (req, res) => {
 	//res.send('<h3> Hello Pankaj </h3>');
-	res.send({
-		name: 'PANKAJ',
-		skills: [ 'Java', 'Ruby', 'NODE-Js'],
-		qualification: 'B.E.'
-	});	
+	// res.send({
+	// 	name: 'PANKAJ',
+	// 	skills: [ 'Java', 'Ruby', 'NODE-Js'],
+	// 	qualification: 'B.E.'
+	// });
+	//console.log(req);
+	//console.log(res);
+	console.log('\n ........ \n .............');
+	console.log(res.getHeaders());
+	console.log(res.header());
+	res.render('rootPage.hbs', {
+		welcomeMessage: 'This is a root page ...!',
+		content: 'Welcome to the project home root page ... !',
+		currentYear: new Date().getFullYear() 
+	});
+
 });
 
 app.get('/error', (req, res) => {
@@ -22,11 +34,23 @@ app.get('/error', (req, res) => {
 app.get('/about', (req, res) => {
 	// res.send('<h3> About Page </h3>');	
 	res.render('about.hbs', {
-		currentYear: new Date().getFullYear()
+		currentYear: new Date().getFullYear(),
+		welcomeMessage: 'Welcome to About Page',	
+		content: 'This is a sample Text on about page'
+	});
+});
+
+
+app.get('/home', (req, res) => {
+	// res.send('<h3> About Page </h3>');	
+	res.render('home.hbs', {
+		currentYear: new Date().getFullYear(),
+		welcomeMessage: 'Welcome to Home Page',
+		content: 'This is a sample Text on home page'
 	});
 });
 
 app.listen(3000, () => {
-	console.log('Server is up port 3000 !!!');
+	console.log('Server is up on port 3000 !!!');
 });
 
